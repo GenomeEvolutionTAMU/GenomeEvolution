@@ -1,6 +1,7 @@
 extends Control
 
 signal player_done
+signal tiles_done
 
 var tile_map = []
 var tile_col = 32
@@ -22,16 +23,16 @@ func _ready():
 	add_child(player)
 	var player_size = player.get_node("Sprite").get_texture().get_size()
 	player.get_node("Camera2D").make_current()
-	$"WorldMap_UI/ResourceStats".set_player(player)
 	emit_signal("player_done");
 	
 	spawn_map()
 	player.position = tile_map[ceil(tile_col/2)][ceil(tile_rows / 2)].position
-	player.tile_ndx = tile_map[ceil(tile_col/2)][ceil(tile_rows / 2)]
-	player.prev_tile_ndx = tile_map[ceil(tile_col/2)][ceil(tile_rows / 2)]
+	player.curr_tile = tile_map[ceil(tile_col/2)][ceil(tile_rows / 2)]
+	player.prev_tile = tile_map[ceil(tile_col/2)][ceil(tile_rows / 2)]
 	learn(tile_map[ceil(tile_col/2)][ceil(tile_rows / 2)], player.sensing_strength)
 	
-	
+	emit_signal("tiles_done")
+
 func spawn_map():
 	var current_ndx
 	
@@ -57,8 +58,9 @@ func calc_biomes():
 
 	for i in range(number_of_pois):
 		var info = Quat(randi()%tile_col, randi()%tile_rows, (randi()%n + 3), i)
-		POIs[info] = Color(randf() +.2, randf()*.25 - .5, randf() + .2)
+		POIs[info] = Color(randf() +.2, randf()*.25 - .5, randf() + .2, randf() + .5)
 		
+		tile_map[info.x][info.y].strength_from_poi = -1
 		tile_map[info.x][info.y].change_color(POIs[info])
 		tile_map[info.x][info.y].biome_set = true
 		tile_map[info.x][info.y].biome_rank = info.z
@@ -86,6 +88,7 @@ func spread_neighbors(center_tile, tile_influence_color, strength, orig_stren):
 		if tile_map[curr_vec2.x][curr_vec2.y].biome_set and tile_map[curr_vec2.x][curr_vec2.y].biome_rank >= strength:
 			continue
 		
+		tile_map[curr_vec2.x][curr_vec2.y].strength_from_poi = strength
 		tile_map[curr_vec2.x][curr_vec2.y].change_color(tile_influence_color * clamp(((strength)/orig_stren), .5, 1))
 		tile_map[curr_vec2.x][curr_vec2.y].biome_set = true
 		tile_map[curr_vec2.x][curr_vec2.y].biome_rank = strength
@@ -93,12 +96,12 @@ func spread_neighbors(center_tile, tile_influence_color, strength, orig_stren):
 
 func _process(delta):
 	if has_moved:
-		forget(tile_map[player.prev_tile_ndx.map_ndx.x][player.prev_tile_ndx.map_ndx.y], max(2, floor(player.sensing_strength / 2) + 1))
-		learn(tile_map[player.tile_ndx.map_ndx.x][player.tile_ndx.map_ndx.y], max(2, floor(player.sensing_strength / 2) + 1))
+		forget(tile_map[player.prev_tile.map_ndx.x][player.prev_tile.map_ndx.y], max(2, floor(player.sensing_strength / 2) + 1))
+		learn(tile_map[player.curr_tile.map_ndx.x][player.curr_tile.map_ndx.y], max(2, floor(player.sensing_strength / 2) + 1))
 		has_moved = false
 	if (player.update_sensing):
-		forget(tile_map[player.prev_tile_ndx.map_ndx.x][player.prev_tile_ndx.map_ndx.y], max(2, floor(player.prev_sensing_strength / 2) + 1))
-		learn(tile_map[player.tile_ndx.map_ndx.x][player.tile_ndx.map_ndx.y], max(2, floor(player.sensing_strength / 2) + 1))
+		forget(tile_map[player.prev_tile.map_ndx.x][player.prev_tile.map_ndx.y], max(2, floor(player.prev_sensing_strength / 2) + 1))
+		learn(tile_map[player.curr_tile.map_ndx.x][player.curr_tile.map_ndx.y], max(2, floor(player.sensing_strength / 2) + 1))
 		player.prev_sensing_strength = player.sensing_strength
 		player.update_sensing = false
 	update_energy_allocation(player.organism.energy)
@@ -153,21 +156,23 @@ func learn(center_tile, strength):
 		tile_map[curr_vec2.x][curr_vec2.y].show_color()
 		learn(tile_map[curr_vec2.x][curr_vec2.y], strength - 1)
 
-var res_stack = 0
+var grace_period = 1
 #energy after turn is given here
 func _on_CardTable_next_turn(turn_text, round_num):
 	if round_num >= 7:
-		var res_vec =  tile_map[player.tile_ndx.map_ndx.x][player.tile_ndx.map_ndx.y].resources
-		res_stack += get_round_res(res_vec)
+		convert_res_to_energy()
 
-		tile_map[player.tile_ndx.map_ndx.x][player.tile_ndx.map_ndx.y].resources += Vector3(-1, -1, -1)
-		tile_map[player.tile_ndx.map_ndx.x][player.tile_ndx.map_ndx.y].resources.x = max(tile_map[player.tile_ndx.map_ndx.x][player.tile_ndx.map_ndx.y].resources.x, 0)
-		tile_map[player.tile_ndx.map_ndx.x][player.tile_ndx.map_ndx.y].resources.y = max(tile_map[player.tile_ndx.map_ndx.x][player.tile_ndx.map_ndx.y].resources.y, 0)
-		tile_map[player.tile_ndx.map_ndx.x][player.tile_ndx.map_ndx.y].resources.z = max(tile_map[player.tile_ndx.map_ndx.x][player.tile_ndx.map_ndx.y].resources.z, 0)
-		
-		if res_stack >= 3:
-			player.organism.update_energy(1)
-			res_stack -= 3;
+var res_stack = 0
+func convert_res_to_energy():
+	#moves resources from the tile to the player
+	var ndices_arr = player.acquire_resources()
+	for ndices in ndices_arr:
+		tile_map[player.curr_tile.map_ndx.x][player.curr_tile.map_ndx.y].resource_2d_array[ndices[0]][ndices[1]] -= ndices[2]
+
+	#outdated mechanic for energy
+	#if res_stack >= 4:
+	player.organism.update_energy(1)
+
 
 
 func get_round_res(res_vec):
@@ -179,8 +184,20 @@ func get_round_res(res_vec):
 		sum += 1
 	if res_vec.z > 0:
 		sum += 1
+	if res_vec.w > 0:
+		sum += 1
 	
 	return sum
-	
-	
-	
+
+func _on_Switch_Button_pressed():
+	if player.move_enabled:
+		$WorldMap_UI/UIPanel/ActionsPanel/GridContainer/Move_Button.modulate -= Color(.5, .5, .5, .5)
+	player.move_enabled = false
+	get_tree().get_root().get_node("Control").gstate = get_tree().get_root().get_node("Control").GSTATE.TABLE
+	get_tree().get_root().get_node("Control").switch_mode()
+
+
+func _on_Move_Button_pressed():
+	if !player.move_enabled:
+		$WorldMap_UI/UIPanel/ActionsPanel/GridContainer/Move_Button.modulate += Color(.5, .5, .5, .5)
+	player.move_enabled = true

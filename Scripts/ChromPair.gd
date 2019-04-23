@@ -72,6 +72,12 @@ func load_from_save(left_cmsm, right_cmsm):
 	get_cmsm(0).load_from_save(left_cmsm);
 	get_cmsm(1).load_from_save(right_cmsm);
 
+<<<<<<< HEAD
+=======
+func get_all_genes():
+	return get_cmsm(0).get_children() + get_cmsm(1).get_children();
+
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 # CHROMOSOME MODIFICATION FUNCTIONS
 
 func extract_elm(elm, place_gap = true):
@@ -351,8 +357,26 @@ func append_gaplist(gap):
 	if (!(gap in gap_list)):
 		gap_list.append(gap);
 func append_atelist(ate):
-	if (!(ate in ate_list) && ate.type == "gene" && ate.mode == "ate"):
+	if (!(ate in ate_list) && ate.is_ate()):
 		ate_list.append(ate);
 
 func _on_cmsm_changed():
 	get_organism()
+
+# GENE SINE FUNCTION ANIMATION:
+	
+const SIN_AMP = 10;
+const SIN_FREQ = PI/2; # rad/s
+var sin_period = 2*PI / SIN_FREQ;
+var total_time = 0;
+const OFFSET_FACTOR = 0.5;
+
+func _process(delta):
+    total_time = total_time + delta;
+    
+    # I'm afraid of overflow
+    if (total_time >= sin_period):
+        total_time -= sin_period;
+    
+    for cmsm in get_cmsms(): for i in cmsm.get_child_count():
+    	cmsm.get_child(i).rect_position.y = SIN_AMP * sin(total_time * SIN_FREQ + OFFSET_FACTOR * i);

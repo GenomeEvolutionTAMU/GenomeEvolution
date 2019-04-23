@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 [gd_scene load_steps=10 format=2]
+=======
+[gd_scene load_steps=14 format=2]
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 
 [ext_resource path="res://Scripts/CardTable.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Organism.tscn" type="PackedScene" id=2]
@@ -9,6 +13,13 @@
 [ext_resource path="res://Scripts/pnl_energy_allocation.gd" type="Script" id=7]
 [ext_resource path="res://Scripts/pnl_saveload.gd" type="Script" id=8]
 [ext_resource path="res://Scripts/GameOver.gd" type="Script" id=9]
+<<<<<<< HEAD
+=======
+[ext_resource path="res://Scripts/resources_grid.gd" type="Script" id=10]
+[ext_resource path="res://Assets/Images/half_radial_progress/under.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Images/half_radial_progress/over.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Images/half_radial_progress/progress.png" type="Texture" id=13]
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 
 [node name="Control" type="Control" index="0"]
 
@@ -31,33 +42,7 @@ margin_top = 1.0
 margin_right = 1.0
 margin_bottom = 551.0
 
-[node name="btn_nxt" type="Button" parent="." index="1"]
-
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -145.0
-margin_top = -67.0
-margin_right = -13.0
-margin_bottom = -13.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Continue"
-flat = false
-align = 1
-_sections_unfolded = [ "Mouse" ]
-
-[node name="ChromosomeStatus" parent="." index="2" instance=ExtResource( 3 )]
+[node name="ChromosomeStatus" parent="." index="1" instance=ExtResource( 3 )]
 
 anchor_left = 0.5
 anchor_right = 0.5
@@ -66,59 +51,31 @@ margin_top = 521.0
 margin_right = 550.0
 margin_bottom = 583.0
 rect_min_size = Vector2( 0, 50 )
-_sections_unfolded = [ "Anchor", "Margin", "Rect", "Scroll" ]
 
-[node name="btn_energy_allocation" type="Button" parent="." index="3"]
+[node name="lbl_turn" type="Label" parent="." index="2"]
 
-anchor_left = 0.0
+anchor_left = 1.0
 anchor_top = 1.0
-anchor_right = 0.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 25.0
-margin_top = -220.0
-margin_right = 175.0
-margin_bottom = -145.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Energy Allocation"
-flat = false
-align = 1
-_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Rect" ]
-
-[node name="lbl_turn" type="Label" parent="." index="4"]
-
-anchor_left = 0.0
-anchor_top = 1.0
-anchor_right = 0.0
-anchor_bottom = 1.0
-margin_left = 25.0
-margin_top = -66.0
-margin_right = 262.0
-margin_bottom = -6.0
+margin_left = -397.0
+margin_top = -60.0
+margin_right = -160.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
+align = 2
 valign = 1
 autowrap = true
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="sc_justnow" type="ScrollContainer" parent="." index="5"]
+[node name="sc_justnow" type="ScrollContainer" parent="." index="3"]
 
-editor/display_folded = true
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -163,15 +120,15 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect" ]
 
-[node name="sc_criteria" type="ScrollContainer" parent="." index="6"]
+[node name="sc_criteria" type="ScrollContainer" parent="." index="4"]
 
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -346.0
+margin_left = -476.0
 margin_top = -275.0
-margin_right = -14.0
+margin_right = -144.0
 margin_bottom = -75.0
 rect_min_size = Vector2( 320, 200 )
 rect_pivot_offset = Vector2( 0, 0 )
@@ -210,6 +167,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Anchor", "Rect" ]
 
+<<<<<<< HEAD
 [node name="btn_saveload" type="Button" parent="." index="7"]
 
 anchor_left = 0.0
@@ -238,6 +196,10 @@ _sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Rect" ]
 
 [node name="pnl_repair_choices" type="Panel" parent="." index="8"]
 
+=======
+[node name="pnl_repair_choices" type="Panel" parent="." index="5"]
+
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 editor/display_folded = true
 visible = false
 anchor_left = 0.5
@@ -388,7 +350,11 @@ text = "Repair"
 flat = false
 align = 1
 
+<<<<<<< HEAD
 [node name="pnl_energy_allocation" type="Panel" parent="." index="9"]
+=======
+[node name="pnl_energy_allocation" type="Panel" parent="." index="6"]
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 
 editor/display_folded = true
 visible = false
@@ -1127,17 +1093,28 @@ flat = false
 align = 1
 _sections_unfolded = [ "Anchor", "Margin" ]
 
+<<<<<<< HEAD
 [node name="pnl_saveload" type="Panel" parent="." index="10"]
+=======
+[node name="pnl_saveload" type="Panel" parent="." index="7"]
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+<<<<<<< HEAD
 margin_left = -791.0
 margin_top = -66.0
 margin_right = -231.0
 margin_bottom = 310.0
+=======
+margin_left = 262.0
+margin_top = -217.0
+margin_right = 776.0
+margin_bottom = 208.0
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -1147,6 +1124,7 @@ size_flags_vertical = 1
 script = ExtResource( 8 )
 _sections_unfolded = [ "Anchor", "Margin", "Rect", "Visibility" ]
 
+<<<<<<< HEAD
 [node name="tbox_save" type="TextEdit" parent="pnl_saveload" index="0"]
 
 anchor_left = 0.0
@@ -1154,6 +1132,18 @@ anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = -134.0
+=======
+[node name="btn_load" type="Button" parent="pnl_saveload" index="0"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -123.0
+margin_top = -36.0
+margin_right = -3.0
+margin_bottom = -6.0
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -1161,6 +1151,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
+<<<<<<< HEAD
 text = ""
 readonly = true
 highlight_current_line = false
@@ -1177,6 +1168,16 @@ caret_block_mode = false
 caret_blink = false
 caret_blink_speed = 0.65
 caret_moving_by_right_click = true
+=======
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Load"
+flat = false
+align = 1
+_sections_unfolded = [ "Anchor", "Margin" ]
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 
 [node name="tbox_load" type="LineEdit" parent="pnl_saveload" index="1"]
 
@@ -1184,8 +1185,13 @@ anchor_left = 0.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+<<<<<<< HEAD
 margin_top = -99.0
 margin_bottom = -75.0
+=======
+margin_top = -66.0
+margin_bottom = -42.0
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -1200,6 +1206,7 @@ caret_blink = false
 caret_blink_speed = 0.65
 caret_position = 0
 
+<<<<<<< HEAD
 [node name="btn_load" type="Button" parent="pnl_saveload" index="2"]
 
 anchor_left = 1.0
@@ -1210,6 +1217,15 @@ margin_left = -96.0
 margin_top = -52.0
 margin_right = -14.0
 margin_bottom = -12.0
+=======
+[node name="tbox_save" type="TextEdit" parent="pnl_saveload" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -90.0
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -1217,6 +1233,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
+<<<<<<< HEAD
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -1226,6 +1243,26 @@ flat = false
 align = 1
 
 [node name="GameOver" type="PopupPanel" parent="." index="11"]
+=======
+text = ""
+readonly = true
+highlight_current_line = false
+syntax_highlighting = false
+show_line_numbers = true
+highlight_all_occurrences = false
+override_selected_font_color = false
+context_menu_enabled = true
+smooth_scrolling = false
+v_scroll_speed = 80.0
+hiding_enabled = 0
+wrap_lines = false
+caret_block_mode = false
+caret_blink = false
+caret_blink_speed = 0.65
+caret_moving_by_right_click = true
+
+[node name="GameOver" type="PopupPanel" parent="." index="8"]
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 
 editor/display_folded = true
 visible = false
@@ -1246,7 +1283,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 popup_exclusive = false
 script = ExtResource( 9 )
+<<<<<<< HEAD
 _sections_unfolded = [ "Size Flags" ]
+=======
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 
 [node name="Label" type="Label" parent="GameOver" index="0"]
 
@@ -1363,8 +1403,477 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Anchor" ]
 
+[node name="button_grid" type="GridContainer" parent="." index="9"]
+
+<<<<<<< HEAD
+=======
+editor/display_folded = true
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -140.0
+margin_top = -230.0
+margin_bottom = -10.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_constants/vseparation = 20
+custom_constants/hseparation = 0
+columns = 1
+_sections_unfolded = [ "custom_constants" ]
+
+[node name="btn_saveload" type="Button" parent="button_grid" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 122.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 120, 60 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Save/Load"
+flat = false
+align = 1
+_sections_unfolded = [ "Mouse" ]
+
+[node name="btn_energy_allocation" type="Button" parent="button_grid" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 80.0
+margin_right = 122.0
+margin_bottom = 140.0
+rect_min_size = Vector2( 120, 60 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Energy Allocation"
+flat = false
+align = 1
+_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Rect" ]
+
+[node name="btn_nxt" type="Button" parent="button_grid" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 160.0
+margin_right = 122.0
+margin_bottom = 220.0
+rect_min_size = Vector2( 120, 60 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Continue"
+flat = false
+align = 1
+_sections_unfolded = [ "Mouse" ]
+
+[node name="resources_grid" type="Panel" parent="." index="10"]
+
+self_modulate = Color( 1, 1, 1, 0.247059 )
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = -190.0
+margin_right = 280.0
+margin_bottom = -20.0
+rect_min_size = Vector2( 280, 170 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+script = ExtResource( 10 )
+_sections_unfolded = [ "Margin", "Visibility" ]
+
+[node name="GridContainer" type="GridContainer" parent="resources_grid" index="0"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 165.0
+margin_right = 154.0
+margin_bottom = 260.0
+rect_rotation = -90.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_constants/vseparation = 20
+custom_constants/hseparation = 20
+columns = 2
+_sections_unfolded = [ "Margin" ]
+
+[node name="TextureProgress3" type="TextureProgress" parent="resources_grid/GridContainer" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 67.0
+margin_bottom = 120.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 0.0
+exp_edit = false
+rounded = true
+texture_under = ExtResource( 11 )
+texture_over = ExtResource( 12 )
+texture_progress = ExtResource( 13 )
+radial_fill_degrees = 180.0
+radial_center_offset = Vector2( -27, 0 )
+nine_patch_stretch = false
+
+[node name="Label" type="Label" parent="resources_grid/GridContainer/TextureProgress3" index="0"]
+
+self_modulate = Color( 0, 0, 0, 1 )
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -34.0
+margin_top = -50.0
+margin_right = 33.0
+margin_bottom = -36.0
+rect_rotation = 90.0
+rect_scale = Vector2( 1.5, 1.5 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "20"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Margin" ]
+
+[node name="Name" type="Label" parent="resources_grid/GridContainer/TextureProgress3" index="1"]
+
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 12.0
+margin_top = -35.0
+margin_right = 87.0
+margin_bottom = -40.0
+rect_rotation = 90.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Resource 3"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Margin", "Visibility" ]
+
+[node name="TextureProgress1" type="TextureProgress" parent="resources_grid/GridContainer" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 87.0
+margin_right = 154.0
+margin_bottom = 120.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 0.0
+exp_edit = false
+rounded = true
+texture_under = ExtResource( 11 )
+texture_over = ExtResource( 12 )
+texture_progress = ExtResource( 13 )
+radial_fill_degrees = 180.0
+radial_center_offset = Vector2( -27, 0 )
+nine_patch_stretch = false
+
+[node name="Label" type="Label" parent="resources_grid/GridContainer/TextureProgress1" index="0"]
+
+self_modulate = Color( 0, 0, 0, 1 )
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -34.0
+margin_top = -50.0
+margin_right = 33.0
+margin_bottom = -36.0
+rect_rotation = 90.0
+rect_scale = Vector2( 1.5, 1.5 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "20"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Margin", "Rect" ]
+
+[node name="Name" type="Label" parent="resources_grid/GridContainer/TextureProgress1" index="1"]
+
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 12.0
+margin_top = -35.0
+margin_right = 87.0
+margin_bottom = -40.0
+rect_rotation = 90.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Resource 1"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Margin", "Visibility" ]
+
+[node name="TextureProgress4" type="TextureProgress" parent="resources_grid/GridContainer" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 140.0
+margin_right = 67.0
+margin_bottom = 260.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 0.0
+exp_edit = false
+rounded = true
+texture_under = ExtResource( 11 )
+texture_over = ExtResource( 12 )
+texture_progress = ExtResource( 13 )
+radial_fill_degrees = 180.0
+radial_center_offset = Vector2( -27, 0 )
+nine_patch_stretch = false
+
+[node name="Label" type="Label" parent="resources_grid/GridContainer/TextureProgress4" index="0"]
+
+self_modulate = Color( 0, 0, 0, 1 )
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -34.0
+margin_top = -50.0
+margin_right = 33.0
+margin_bottom = -36.0
+rect_rotation = 90.0
+rect_scale = Vector2( 1.5, 1.5 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "20"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Margin" ]
+
+[node name="Name" type="Label" parent="resources_grid/GridContainer/TextureProgress4" index="1"]
+
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 12.0
+margin_top = -35.0
+margin_right = 87.0
+margin_bottom = -161.0
+rect_rotation = 90.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Resource 4"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Margin", "Visibility" ]
+
+[node name="TextureProgress2" type="TextureProgress" parent="resources_grid/GridContainer" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 87.0
+margin_top = 140.0
+margin_right = 154.0
+margin_bottom = 260.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 0.0
+exp_edit = false
+rounded = true
+texture_under = ExtResource( 11 )
+texture_over = ExtResource( 12 )
+texture_progress = ExtResource( 13 )
+radial_fill_degrees = 180.0
+radial_center_offset = Vector2( -27, 0 )
+nine_patch_stretch = false
+
+[node name="Label" type="Label" parent="resources_grid/GridContainer/TextureProgress2" index="0"]
+
+self_modulate = Color( 0, 0, 0, 1 )
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -34.0
+margin_top = -50.0
+margin_right = 33.0
+margin_bottom = -36.0
+rect_rotation = 90.0
+rect_scale = Vector2( 1.5, 1.5 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "20"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Margin" ]
+
+[node name="Name" type="Label" parent="resources_grid/GridContainer/TextureProgress2" index="1"]
+
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 12.0
+margin_top = -35.0
+margin_right = 87.0
+margin_bottom = -40.0
+rect_rotation = 90.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Resource 2"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Margin", "Visibility" ]
+
 [connection signal="player_done" from="." to="pnl_energy_allocation" method="_on_Control_player_done"]
 
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 [connection signal="died" from="Organism" to="." method="_on_Organism_died"]
 
 [connection signal="died" from="Organism" to="GameOver" method="_on_Organism_died"]
@@ -1377,12 +1886,15 @@ _sections_unfolded = [ "Anchor" ]
 
 [connection signal="updated_gaps" from="Organism" to="." method="_on_Organism_updated_gaps"]
 
+<<<<<<< HEAD
 [connection signal="pressed" from="btn_nxt" to="." method="_on_btn_nxt_pressed"]
 
 [connection signal="pressed" from="btn_energy_allocation" to="." method="_on_btn_energy_allocation_pressed"]
 
 [connection signal="pressed" from="btn_saveload" to="." method="_on_btn_saveload_pressed"]
 
+=======
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 [connection signal="item_activated" from="pnl_repair_choices/hsplit/ilist_choices" to="." method="_on_ilist_choices_item_activated"]
 
 [connection signal="item_selected" from="pnl_repair_choices/hsplit/ilist_choices" to="." method="upd_repair_desc"]
@@ -1422,5 +1934,27 @@ _sections_unfolded = [ "Anchor" ]
 [connection signal="pressed" from="GameOver/GridContainer/Reset" to="GameOver" method="_on_Reset_pressed"]
 
 [connection signal="pressed" from="GameOver/GridContainer/Exit" to="GameOver" method="_on_Exit_pressed"]
+
+[connection signal="pressed" from="button_grid/btn_saveload" to="." method="_on_btn_saveload_pressed"]
+
+[connection signal="pressed" from="button_grid/btn_energy_allocation" to="." method="_on_btn_energy_allocation_pressed"]
+
+[connection signal="pressed" from="button_grid/btn_nxt" to="." method="_on_btn_nxt_pressed"]
+
+[connection signal="mouse_entered" from="resources_grid/GridContainer/TextureProgress3" to="resources_grid" method="_on_TextureProgress3_mouse_entered"]
+
+[connection signal="mouse_exited" from="resources_grid/GridContainer/TextureProgress3" to="resources_grid" method="_on_TextureProgress3_mouse_exited"]
+
+[connection signal="mouse_entered" from="resources_grid/GridContainer/TextureProgress1" to="resources_grid" method="_on_TextureProgress1_mouse_entered"]
+
+[connection signal="mouse_exited" from="resources_grid/GridContainer/TextureProgress1" to="resources_grid" method="_on_TextureProgress1_mouse_exited"]
+
+[connection signal="mouse_entered" from="resources_grid/GridContainer/TextureProgress4" to="resources_grid" method="_on_TextureProgress4_mouse_entered"]
+
+[connection signal="mouse_exited" from="resources_grid/GridContainer/TextureProgress4" to="resources_grid" method="_on_TextureProgress4_mouse_exited"]
+
+[connection signal="mouse_entered" from="resources_grid/GridContainer/TextureProgress2" to="resources_grid" method="_on_TextureProgress2_mouse_entered"]
+
+[connection signal="mouse_exited" from="resources_grid/GridContainer/TextureProgress2" to="resources_grid" method="_on_TextureProgress2_mouse_exited"]
 
 

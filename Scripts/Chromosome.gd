@@ -49,7 +49,7 @@ func get_pairs(left_id, right_id, minimal = false):
 
 func find_pair_right_idxs(left_idx, right_id):
 	var valid_rights = [];
-	for i in range(left_idx, get_child_count()):
+	for i in range(left_idx+1, get_child_count()):
 		var gene = get_child(i);
 		if (gene.is_gap()):
 			return valid_rights;
@@ -126,6 +126,13 @@ func find_next_gap(start_idx, step = 1, end_at = -1):
 			return i;
 	return -1;
 
+func find_gene_count_of_type(class_type):
+	var count = 0
+	for i in range(get_child_count()):
+		if (get_child(i).ess_class == class_type):
+			count += 1
+	return count
+
 func find_gene(id):
 	for i in range(get_child_count()):
 		if (get_child(i).id == id):
@@ -188,6 +195,11 @@ func load_from_save(save):
 		nxt_gelm.callv("setup", args);
 		if (nxt_gelm.is_gap()):
 			get_cmsm_pair().append_gaplist(nxt_gelm);
+<<<<<<< HEAD
+=======
+		if (nxt_gelm.is_ate()):
+			get_cmsm_pair().append_atelist(nxt_gelm);
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 		add_elm(nxt_gelm);
 
 # CHROMOSOME MODIFICATION FUNCTIONS
@@ -244,6 +256,8 @@ func add_elm(elm, pos = null):
 		
 		add_child(elm);
 		move_child(elm, pos);
+		if (elm.is_ate()):
+			get_cmsm_pair().append_atelist(elm);
 		set_size();
 		
 		if (do_animations):

@@ -2,6 +2,7 @@ extends Node
 
 var sqelm_textures = {"gene": load("res://Assets/Images/gene.png"), "break": load("res://Assets/Images/break.png")};
 var ess_textures = {};
+var ess_textures_noDNA = {};
 var default_te_texture = load("res://Assets/Images/tes/default_te.png");
 enum ESSENTIAL_CLASSES {Replication, Locomotion, Manipulation, Sensing, Construction, Deconstruction};
 enum TURN_TYPES {NewTEs, TEJump, RepairBreaks, EnvironmentalDamage, Recombination, Evolve, CheckViability};
@@ -11,13 +12,13 @@ var turns = [TURN_TYPES.NewTEs, TURN_TYPES.TEJump, TURN_TYPES.RepairBreaks, TURN
 var turn_idx
 var round_num
 
-var card_table;
+var card_table
 
-var animation_speed = 600;
-var animation_ease = Tween.EASE_IN;
-var animation_trans = Tween.TRANS_LINEAR;
-var TE_jump_time_limit = 5;
-var TE_insertion_time_limit = 0.8;
+var animation_speed = 600
+var animation_ease = Tween.EASE_IN
+var animation_trans = Tween.TRANS_LINEAR
+var TE_jump_time_limit = 5
+var TE_insertion_time_limit = 0.8
 
 var ate_personalities = {};
 
@@ -32,6 +33,7 @@ func _ready():
 	
 	for c in ESSENTIAL_CLASSES.values():
 		ess_textures[c] = load("res://Assets/Images/genes/" + class_to_string(c) + ".png");
+		ess_textures_noDNA[c] = load("res://Assets/Images/genes_noDNA/" + class_to_string(c) + ".png"); #textures for genes w/o DNA background
 		essential_versions[c] = 1;
 	
 	# Import ATE Personalities
@@ -83,6 +85,12 @@ func load_personalities(data_name, dict):
 func get_random_ate_personality():
 	return ate_personalities[ate_personalities.keys()[randi()%ate_personalities.size()]];
 
+func get_ate_personality_by_name(ate_name):
+	for k in ate_personalities:
+		if (ate_personalities[k]["title"] == ate_name):
+			return ate_personalities[k];
+	return {};
+
 # This is a little hack I've come up with to make bars in ScrollContainer controls larger
 func change_slider_width(scroll_cont, horiz = true, width = 30):
 	if (horiz):
@@ -123,66 +131,75 @@ func get_turn_txt():
 			return "Unknown turn type (#%d)" % _x;
 
 func get_save_str():
+<<<<<<< HEAD
 	return "%s:%s" % [turn_idx, card_table.orgn.get_save()];
+=======
+	return "%s:%s" % [turn_idx, card_table.ognsm.get_save()];
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 
 func load_from_save(save):
 	var s = save.split(":");
 	turn_idx = int(s[0]) - 1;
+<<<<<<< HEAD
 	card_table.orgn.load_from_save(s[1]);
+=======
+	card_table.ognsm.load_from_save(s[1]);
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 
 func copy_elm(elm):
 	var copy_elm = load("res://Scenes/SequenceElement.tscn").instance();
 	copy_elm.setup_copy(elm);
 	return copy_elm;
 
-func roll(n, d = null):
-	if (d == null):
-		var i = n.split("d");
-		n = int(i[0]);
-		d = int(i[1]);
-	var sum = 0;
-	for i in range(n):
-		sum += randi()%d + 1;
-	return sum;
+func pretty_element_name_list(elms_array):
+	var list = "";
+	for i in range(elms_array.size()):
+		var put_comma = i < elms_array.size() - 1;
+		var elm = elms_array[i];
+		
+		if (elm.id == ""):
+			if (elm.is_gap()):
+				list += "Gap";
+			else:
+				put_comma = false;
+		else:
+			list += elm.id;
+		
+		if (put_comma):
+			list += ", ";
+	return list;
 
-func rollCopyRepair():
-	var rand = randf();
-	if (rand <= .1667):
+func rollChances(chance_array, mods = []):
+	# Modify the chances, then find their sum for normalizing
+	var roll_chances = chance_array + [];
+	var chance_sum = 0;
+	for i in range(roll_chances.size()):
+		if (i < mods.size()):
+			roll_chances[i] *= mods[i];
+		chance_sum += roll_chances[i];
+	if (chance_sum <= 0):
 		return 0;
-	elif (rand <= .3334):
-		return 1;
-	elif (rand <= .8335):
-		return 2;
-	else:
-		return 3;
+    
+	# Add up the normalized chances, checking against the roll
+	var roll = randf();
+	var previous_range = 0;
+	for i in range(roll_chances.size() - 1):
+		var now_range = previous_range + (roll_chances[i] / chance_sum);
+		if (roll <= now_range):
+			return i;
+		previous_range = now_range;
+	return roll_chances.size() - 1;
 
-func rollJoinEnds():
-	var rand = randf();
-	if (rand <= .5001):
-		return 0;
-	elif (rand <= .8335):
-		return 1;
-	else:
-		return 2;
-
-func rollEvolve():
-	var rand = randf();
-	if (rand <= 0.3334):
-		return 0;
-	if (rand <= 0.8335):
-		return 1;
-	else:
-		return 2;
-
-# used Desmos to come up with a quick and dirty formula
 func collapseChance(segment_size, dist_from_gap):
-	return 2.0 * float(segment_size + dist_from_gap) / (segment_size * dist_from_gap * dist_from_gap)
+	return float(float(segment_size) / float(dist_from_gap + 0.5));
 
 func rollCollapse(segment_size, dist_from_gap):
+	if (dist_from_gap < 0):
+		dist_from_gap *= -1;
 	var roll = randf();
 	var need = collapseChance(segment_size, dist_from_gap);
+	print("--- Collapse Attempt ---");
 	print("need: ", need);
 	print("got: ", roll);
-	print("---");
 	return roll <= need;
 	#return randf() <= collapseChance(segment_size, dist_from_gap);

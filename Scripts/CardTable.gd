@@ -6,6 +6,7 @@ signal next_turn(turn_text, round_num);
 
 onready var justnow_label = $sc_justnow/lbl_justnow;
 onready var criteria_label = $sc_criteria/lbl_criteria;
+<<<<<<< HEAD
 onready var orgn = $Organism;
 
 func _ready():
@@ -14,6 +15,16 @@ func _ready():
 	
 	$lbl_turn.text = "Click \"Continue\" to start.";
 	connect("next_turn", orgn, "adv_turn");
+=======
+onready var ognsm = $Organism;
+
+func _ready():
+	Game.card_table = self;
+	ognsm.setup(self);
+	
+	$lbl_turn.text = "Click \"Continue\" to start.";
+	connect("next_turn", ognsm, "adv_turn");
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 
 func get_cmsm_status():
 	return $ChromosomeStatus;
@@ -23,8 +34,13 @@ func get_cmsm_status():
 func show_repair_opts(show):
 	$pnl_repair_choices.visible = show;
 	if (show):
+<<<<<<< HEAD
 		$pnl_repair_choices/hsplit/ilist_choices.select(orgn.sel_repair_idx);
 		upd_repair_desc(orgn.sel_repair_idx);
+=======
+		$pnl_repair_choices/hsplit/ilist_choices.select(ognsm.sel_repair_idx);
+		upd_repair_desc(ognsm.sel_repair_idx);
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 
 func _on_Organism_show_repair_opts(show):
 	show_repair_opts(show);
@@ -33,8 +49,13 @@ func hide_repair_opts():
 	$pnl_repair_choices.visible = false;
 
 func upd_repair_desc(idx):
+<<<<<<< HEAD
 	$pnl_repair_choices/hsplit/vsplit/btn_apply_repair.disabled = !orgn.repair_type_possible[idx];
 	orgn.change_selected_repair(idx);
+=======
+	$pnl_repair_choices/hsplit/vsplit/btn_apply_repair.disabled = !ognsm.repair_type_possible[idx];
+	ognsm.change_selected_repair(idx);
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 	match (idx):
 		0:
 			$pnl_repair_choices/hsplit/vsplit/scroll/lbl_choice_desc.text = "If the genes to the left and the right of the gap are the same, the break can be repaired by discarding one of the duplicates.";
@@ -47,7 +68,11 @@ func upd_repair_desc(idx):
 
 func _on_btn_apply_repair_pressed():
 	$pnl_saveload.new_save(Game.get_save_str());
+<<<<<<< HEAD
 	orgn.auto_repair();
+=======
+	ognsm.auto_repair();
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 
 func _on_Organism_justnow_update(text):
 	if (justnow_label == null):
@@ -55,11 +80,15 @@ func _on_Organism_justnow_update(text):
 	justnow_label.text = text;
 
 func _on_Organism_updated_gaps(has_gaps, gap_text):
-	$btn_nxt.disabled = has_gaps;
+	$button_grid.get_node("btn_nxt").disabled = has_gaps;
 	criteria_label.text = gap_text;
 
 func _on_ilist_choices_item_activated(idx):
+<<<<<<< HEAD
 	orgn.apply_repair_choice(idx);
+=======
+	ognsm.apply_repair_choice(idx);
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 
 # Next Turn button and availability
 
@@ -81,11 +110,16 @@ func _on_Organism_doing_work(working):
 
 func _on_Organism_died(org):
 	$GameOver.popup_centered()
+	$GameOver.display()
 	Game.round_num = 0
-	$btn_nxt.disabled = true;
+	$button_grid.get_node("btn_nxt").disabled = true;
 
 func check_if_ready():
+<<<<<<< HEAD
 	$btn_nxt.disabled = orgn.is_dead() || wait_on_anim || wait_on_select;
+=======
+	$button_grid.get_node("btn_nxt").disabled = ognsm.is_dead() || wait_on_anim || wait_on_select;
+>>>>>>> 036ba4f46195ece332bd6144d13585708fc8b005
 
 func _on_btn_energy_allocation_pressed():
 	$pnl_energy_allocation.visible = true;

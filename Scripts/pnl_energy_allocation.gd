@@ -21,7 +21,7 @@ func get_energy(type):
 		"construction":
 			return;
 		"deconstruction":
-			return;
+			return organism.energy_allocations[Game.ESSENTIAL_CLASSES.Deconstruction];
 		"locomotion":
 			return;
 		"manipulation":
@@ -62,8 +62,18 @@ func _on_construction_minus_pressed():
 	organism.update_energy_allocation(Game.ESSENTIAL_CLASSES.Construction, -1);
 
 func _on_deconstruction_plus_pressed():
+	for t in range(4):
+		if get_energy("deconstruction") < 10 && player.breaking_strength[t].y < 10:
+			player.breaking_strength[t].y = min(10, player.breaking_strength[t].y + 1)
+		else:
+			return
 	organism.update_energy_allocation(Game.ESSENTIAL_CLASSES.Deconstruction, 1);
 func _on_deconstruction_minus_pressed():
+	for t in range(4):
+		if get_energy("deconstruction") > 0 && player.breaking_strength[t].y > 5:
+			player.breaking_strength[t].y = max(5, player.breaking_strength[t].y - 1)
+		else:
+			return
 	organism.update_energy_allocation(Game.ESSENTIAL_CLASSES.Deconstruction, -1);
 
 func _on_locomotion_plus_pressed():
