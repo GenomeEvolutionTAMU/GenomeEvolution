@@ -22,6 +22,14 @@ var act_mods = {"silent": 1.0, "excise": 1.0, "jump": 1.0, "copy": 1.0};
 
 var element_code
 
+var codes_array = [
+	"Replication",
+	"Locomotion",
+	"Manipulation",
+	"Sensing",
+	"Construction",
+	"Deconstruction"
+]
 var codes_dictionary = {
 	"Replication" : "005000",
 	"Locomotion" : "015000",
@@ -49,6 +57,7 @@ func setup(_type, _id = "", _mode = "ate", _ess_class = -1, _ess_version = 0, _c
 	type = _type;
 	mode = _mode;
 	element_code = _code
+	ess_version = _ess_version
 	var tex;
 	if (type == "gene"):
 		match (mode):
@@ -56,11 +65,9 @@ func setup(_type, _id = "", _mode = "ate", _ess_class = -1, _ess_version = 0, _c
 				# This will happen for saveloads
 				if (typeof(_ess_class) != TYPE_INT):
 					_ess_class = int(_ess_class);
-					_ess_version = int(_ess_version);
 				
 				if (_ess_class in Game.ESSENTIAL_CLASSES.values()):
 					ess_class = _ess_class;
-					ess_version = _ess_version;
 					tex = Game.ess_textures[_ess_class];
 				else:
 					print("!! Trying to put ", name, " (", _type, ", ", _id, ") in non-existent eclass (", _ess_class, ")");
@@ -72,9 +79,11 @@ func setup(_type, _id = "", _mode = "ate", _ess_class = -1, _ess_version = 0, _c
 				else:
 					ate_personality = Game.get_ate_personality_by_name(id);
 				element_code = ate_personality["code"]
+				ess_version = 0
 				tex = ate_personality["art"];
 	else:
 		tex = Game.sqelm_textures[_type];
+		element_code = "-1"
 	
 	upd_display();
 	
@@ -97,6 +106,7 @@ func setup_copy(ref_elm):
 				element_code = ref_elm.element_code;
 			"ate":
 				ate_personality = ref_elm.ate_personality;
+				ess_version = ref_elm.ess_version;
 				id = ate_personality["title"];
 				tex = ate_personality["art"];
 				element_code = ate_personality["code"];
@@ -116,29 +126,32 @@ func evolve(ndx, good = true):
 			ess_class = null;
 		2:
 			#ess_version = Game.essential_versions[ess_class];
-			ess_version += 1;
+			#ess_version += 1;
 			element_code = element_code.left(2) + str(int(element_code.right(2)) + 10);
 		3:
 			#ess_version = Game.essential_versions[ess_class];
-			ess_version -= 1;
+			#ess_version -= 1;
 			element_code = element_code.left(2) + str(int(element_code.right(2)) - 10);
 		4:
 			#ess_version = Game.essential_versions[ess_class];
-			ess_version += 0.1;
+			#ess_version += 0.1;
 			element_code = element_code.left(2) + str(int(element_code.right(2)) - 1);
 		5:
 			#ess_version = Game.essential_versions[ess_class];
-			ess_version -= 0.1;
+			#ess_version -= 0.1;
 			element_code = element_code.left(2) + str(int(element_code.right(2)) - 1);
 
-	print(element_code)
-	print()
 	upd_display();
 	get_cmsm().emit_signal("cmsm_changed");
 
 
 #FUTURE CHANGES HERE TO ACTUALLY CHANGE THE +1 and so forth on the visual SPRITE
 func upd_display():
+	if (type != "break" && int(element_code) - int(codes_dictionary[codes_array[int(element_code[1])]]) == 0):
+		$version/version_lbl.text = "B"
+		$version.hide()
+	else:
+		$version.show()
 	$lbl.text = id;
 	match(type):
 		"gene":
@@ -147,18 +160,29 @@ func upd_display():
 			match (mode):
 				"ate":
 					self_modulate = Color(.8, .15, 0);
+					if (int(element_code) - int(Game.get_ate_personality_by_name(id)["code"]) == 0):
+						$version.hide()
+						$version/version_lbl.text = "B"
+						$version/version_lbl.self_modulate = Color(1, 1, 1)
+					else:
+						$version/version_lbl.text = str(int(element_code) - int(Game.get_ate_personality_by_name(id)["code"]))
+						if int(element_code) - int(codes_dictionary[codes_array[int(element_code[1])]]) > 0:
+							$version/version_lbl.self_modulate = Color(.1, .8, .1)
+						else:
+							$version/version_lbl.self_modulate = Color(.8, .1, .1)
 					#$lbl.text += " (Active)";
 				"ste":
 					self_modulate = Color(.55, 0, 0);
 					#$lbl.text += " (Silenced)";
 				"essential":
 					#self_modulate = Color(.15, .8, 0); Commented out to make the gene icons be shown with no green tint
-					if (ess_version == 0):
+					if (int(element_code) - int(codes_dictionary[codes_array[int(element_code[1])]]) == 0):
+						$version.hide()
 						$version/version_lbl.text = "B"
 						$version/version_lbl.self_modulate = Color(1, 1, 1)
 					else:
-						$version/version_lbl.text = str(ess_version)
-						if ess_version > 0:
+						$version/version_lbl.text = str(int(element_code) - int(codes_dictionary[codes_array[int(element_code[1])]]))
+						if int(element_code) - int(codes_dictionary[codes_array[int(element_code[1])]]) > 0:
 							$version/version_lbl.self_modulate = Color(.1, .8, .1)
 						else:
 							$version/version_lbl.self_modulate = Color(.8, .1, .1)
@@ -167,6 +191,7 @@ func upd_display():
 					self_modulate = Color(.5, .5, 0);
 					#$lbl.text += " (Pseudogene)";
 		"break":
+			$version.hide()
 			toggle_mode = true;
 			continue;
 		_:
@@ -268,8 +293,12 @@ func _on_SeqElm_pressed():
 
 func _on_SeqElm_mouse_entered():
 	get_cmsm().magnify_elm(self);
+	if type != "break" && $version/version_lbl.text == "B":
+		$version.show()
 	emit_signal("elm_mouse_entered", self);
 
 func _on_SeqElm_mouse_exited():
 	get_cmsm().demagnify_elm(self);
+	if $version/version_lbl.text == "B":
+		$version.hide()
 	emit_signal("elm_mouse_exited", self);
